@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   Silverline Health — design tokens
+
+   Deep eucalypt rather than the standard clinical blue: calmer, and specific
+   to place. Defined as custom properties and mapped into Tailwind below, so
+   retheming means editing this block and nothing else.
+   =========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --ink: #16302a;      /* headings, emphasis */
+  --body: #45554e;     /* body copy */
+  --muted: #66766f;    /* labels, secondary detail */
+  --brand: #2f6b54;    /* links, active nav, available status */
+  --signal: #8f5d18;   /* amber — limited availability */
+  --surface: #fbfbf9;  /* page background */
+  --card: #ffffff;     /* cards and panels */
+  --wash: #eef2ee;     /* section tint */
+  --line: #dde4df;     /* hairlines */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    /* Rebalanced rather than inverted — chroma drops and the brand lightens
+       so it still passes contrast against a dark ground. */
+    --ink: #eaf1ec;
+    --body: #b4c3bb;
+    --muted: #83978d;
+    --brand: #6dbd95;
+    --signal: #d9a352;
+    --surface: #0e1613;
+    --card: #15201c;
+    --wash: #131e1a;
+    --line: #26332e;
+  }
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-signal: var(--signal);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-wash: var(--wash);
+  --color-line: var(--line);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
+}
+
+body {
+  background: var(--surface);
+  color: var(--body);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--brand);
+  color: var(--surface);
+}
+
+h1, h2, h3, h4 {
+  color: var(--ink);
+  /* Fraunces is variable: set optical size and softness once, not per heading. */
+  font-variation-settings: "SOFT" 30, "WONK" 0, "opsz" 36;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+/* Appointment times, hours and fees are read in columns, so digits need a
+   fixed width. */
+.tabular, table { font-variant-numeric: tabular-nums; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
